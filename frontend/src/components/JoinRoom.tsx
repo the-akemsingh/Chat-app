@@ -1,26 +1,15 @@
-import { useState } from "react"
-
-export default function Joinroom() {
-    const [roomId, setRoomId] = useState<string | null>(null)
-
-
-    function handleJoin() {
-        const ws = new WebSocket("ws://localhost:3000")
-        ws.onopen = () => {
-            ws.send(JSON.stringify({
-                type: "join",
-                payload: {
-                    roomId
-                }
-            }))
-            
-        }
-    }
+export default function JoinRoom({ setRoomId,setUsername , handleJoin}:any) {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="p-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-4 text-center">Join a Room</h2>
                 <div className="flex space-x-2">
+                    <input
+                        type="text"
+                        onChange={(e) => { setUsername(e.target.value) }}
+                        placeholder="Enter your name"
+                        className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
                     <input
                         type="text"
                         onChange={(e) => { setRoomId(e.target.value) }}
