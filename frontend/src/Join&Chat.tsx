@@ -6,17 +6,18 @@ import Chat from "./components/Chat";
 export interface Message{
     message:string,
     name:string,
-    userId:string
+    userId:number
 }
 
 export default function JoinChat() {
 
-    const [roomId, setRoomId] = useState<string | null>(null)
     const [inputText, setInputText] = useState<string>('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [connected, setConnected] = useState<boolean>(false);
     const [roomjoined, setRoomjoined] = useState<boolean>(false);
+    const [roomId, setRoomId] = useState<string | null>(null)
     const [userName,setUsername]=useState<string | null>(null);
+    const [userId,setUserId]=useState<number | null >(null);
 
     const wss = useRef<WebSocket | null>(null)
 
@@ -24,41 +25,42 @@ export default function JoinChat() {
         const ws = new WebSocket("ws://localhost:3000")
         ws.onopen = () => {
             setConnected(true);
-
             ws.onmessage = (messages) => {
-                const receivedMsg:Message = JSON.parse(messages.data);
-                console.log(messages.data)
-                setMessages((m) => [...m, receivedMsg])
+                const data=JSON.parse(messages.data);
+                if(data.type==="join"){
+                    const userId=data.payload.userId;
+                    setUserId(userId);
+                }
+                else if(data.type==="chat"){
+                    setMessages(m=>[...m,data.payload])
+                }
             }
-
-            const token = localStorage.getItem("roomId")
+            const roomId = localStorage.getItem("roomId")
             const userName = localStorage.getItem("userName")
-            if (token && token != null) {
+            if (roomId && roomId != null) {
                 ws.send(JSON.stringify({
                     type: "join",
                     payload: {
-                        roomId: token,
+                        roomId: roomId,
                         name:userName
                     }
                 }))
                 setRoomjoined(true);
-                setRoomId(token);
+                setRoomId(roomId);
                 setUsername(userName);
             }
         }
-
         ws.onerror = () => {
             console.log("Error Connecting to ws server");
             setConnected(false);
         }
-
         ws.close = () => {
             setConnected(false)
             setRoomId(null)
             setUsername(null)
+            setUserId(null)
         }
         wss.current = ws
-
         return () => {
             ws.close();
         }
@@ -105,7 +107,7 @@ export default function JoinChat() {
                     <div>
                         {roomjoined ? (
                             <>
-                                <Chat userName={userName as string} messages={messages} inputText={inputText} setInputText={setInputText} handleSend={handleSend} ></Chat>
+                                <Chat userId={userId as number} userName={userName as string} messages={messages} inputText={inputText} setInputText={setInputText} handleSend={handleSend} ></Chat>
                             </>
                         ) : (
                             <>

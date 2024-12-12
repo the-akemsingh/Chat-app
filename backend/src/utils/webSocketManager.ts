@@ -10,14 +10,6 @@ interface User {
 let userId=0;
 let records: User[] = [];
 
-// message={
-//     type:"chat" | "join" | "leave",
-//     payload:{
-//         message:"skhdfbsdbf" ,
-//         roomId:"sdhbfsjdbf",
-//         userId:"1"
-//     }
-// }
 
 //@ts-ignore
 export const webSocketServerManager = (wss: WebSocket.Server<typeof WebSocket, typeof IncomingMessage>) => {
@@ -27,17 +19,23 @@ export const webSocketServerManager = (wss: WebSocket.Server<typeof WebSocket, t
       socket.on("message", (message) => {
         // @ts-ignore
         const parsedMessage = JSON.parse(message);
-        console.log(parsedMessage);
 
         if (parsedMessage.type === "join") {
           if (parsedMessage.payload.roomId) {
+            const newUserId=userId++;
             records.push({
               socket,
               roomId: parsedMessage.payload.roomId,
-              userId: userId++,
-              name:parsedMessage.name
+              userId: newUserId,
+              name:parsedMessage.payload.name
             });
             console.log("a user joined a room");
+            socket.send(JSON.stringify({
+              type:"join",
+              payload:{
+                userId:newUserId
+              }
+            }))
           }
         }
 
@@ -54,9 +52,12 @@ export const webSocketServerManager = (wss: WebSocket.Server<typeof WebSocket, t
                   if (record.roomId === currentUser.roomId) {
                       record.socket.send(
                           JSON.stringify({
+                            type:"chat",
+                            payload:{
                               userId: currentUser.userId,
                               name: currentUser.name,
                               message: parsedMessage.payload.message,
+                            }
                           })
                       );
                   }
