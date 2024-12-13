@@ -22,7 +22,7 @@ export default function JoinChat() {
     const wss = useRef<WebSocket | null>(null)
 
     useEffect(() => {
-        const ws = new WebSocket(process.env.WS_URL || "ws://localhost:3000")
+        const ws = new WebSocket(process.env.REACT_APP_WS_URL || "ws://localhost:3000")
         ws.onopen = () => {
             setConnected(true);
             ws.onmessage = (messages) => {
