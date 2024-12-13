@@ -21,8 +21,10 @@ export default function JoinChat() {
 
     const wss = useRef<WebSocket | null>(null)
 
+    const WS_URL=import.meta.env.VITE_WS_URL
+
     useEffect(() => {
-        const ws = new WebSocket(import.meta.env.VITE_WS_URL || "ws://localhost:3000")
+        const ws = new WebSocket(WS_URL )
         ws.onopen = () => {
             setConnected(true);
             ws.onmessage = (messages) => {
