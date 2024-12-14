@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "src/main.tsx",
+        "src": "package.json",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "dist"
@@ -21,4 +21,4 @@
     "env": {
       "VITE_WS_URL": "wss://backendca.akemnoorsingh.me"
     }
-  }
+}  
