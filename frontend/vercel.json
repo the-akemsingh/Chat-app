@@ -2,11 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "package.json",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "vite.config.js",
+        "src": "src/main.tsx",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "dist"
@@ -16,8 +12,13 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.html"
+        "dest": "/index.html",
+        "headers": {
+          "cache-control": "s-maxage=0"
+        }
       }
-    ]
+    ],
+    "env": {
+      "VITE_WS_URL": "wss://backendca.akemnoorsingh.me"
+    }
   }
-  
