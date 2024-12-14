@@ -1,11 +1,14 @@
 import { Message } from "../Join&Chat";
+import { useNavigate } from "react-router-dom";
 
 export default function Chat({ userId, userName, messages, setInputText, handleSend, inputText }: { userId: number, userName: string, messages: Message[], setInputText: (a: string) => void, handleSend: () => void, inputText: string }) {
     const roomId = localStorage.getItem("roomId")
+    const navigate=useNavigate()
 
     function Exitroom() {
         localStorage.removeItem("roomId")
-        window.location.reload()
+        // window.location.reload()
+        navigate('/')
     }
 
     return (
