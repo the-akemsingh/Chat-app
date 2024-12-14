@@ -24,7 +24,7 @@ export default function JoinChat() {
     const WS_URL=import.meta.env.VITE_WS_URL
 
     useEffect(() => {
-        const ws = new WebSocket(WS_URL )
+        const ws = new WebSocket( WS_URL )
         ws.onopen = () => {
             setConnected(true);
             ws.onmessage = (messages) => {
@@ -63,9 +63,8 @@ export default function JoinChat() {
             setUserId(null)
         }
         wss.current = ws
-        return () => {
-            ws.close();
-        }
+
+        
 
     }, [])
 
