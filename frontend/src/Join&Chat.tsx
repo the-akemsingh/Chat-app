@@ -18,8 +18,8 @@ export default function JoinChat() {
     const [roomId, setRoomId] = useState<string | null>(null)
     const [userName,setUsername]=useState<string | null>(null);
     const [userId,setUserId]=useState<number | null >(null);
-
-    const wss = useRef<WebSocket | null>(null)
+    const [wss,setWss]=useState<WebSocket | null>(null)
+    // const wss = useRef<WebSocket | null>(null)
 
     const WS_URL=import.meta.env.VITE_WS_URL
 
@@ -62,16 +62,17 @@ export default function JoinChat() {
             setUsername(null)
             setUserId(null)
         }
-        wss.current = ws
+        // wss.current = ws
+        setWss(ws)
 
-        
+
 
     }, [])
 
 
     function handleJoin() {
-        if (wss.current?.readyState == WebSocket.OPEN) {
-            wss.current!.send(JSON.stringify({
+        if (wss?.readyState == WebSocket.OPEN) {
+            wss!.send(JSON.stringify({
                 type: "join",
                 payload: {
                     roomId,
@@ -87,7 +88,7 @@ export default function JoinChat() {
 
     const handleSend = () => {
         try {
-            wss.current!.send(JSON.stringify({
+            wss!.send(JSON.stringify({
                 type: "chat",
                 payload: {
                     roomId,

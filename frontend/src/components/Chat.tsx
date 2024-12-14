@@ -7,7 +7,6 @@ export default function Chat({ userId, userName, messages, setInputText, handleS
 
     function Exitroom() {
         localStorage.removeItem("roomId")
-        // window.location.reload()
         navigate('/')
     }
 
