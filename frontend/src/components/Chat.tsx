@@ -52,8 +52,8 @@ export default function Chat({ userId, userName, messages, setInputText, handleS
     };
 
     return (
-        <div className="grid grid-cols-3 gap-4 p-10 bg-gray-100 min-h-screen">
-            <div className="flex ml-36 mr-36 col-span-2 flex-col bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 lg:p-10 bg-gray-100 min-h-screen">
+            <div className="lg:col-span-2 flex flex-col bg-white rounded-xl shadow-md overflow-hidden">
                 <div className="p-4 bg-blue-500 text-white">
                     <div className="flex justify-between items-center mb-2">
                         <h2 className="text-xl font-semibold">Chat Room</h2>
@@ -61,12 +61,12 @@ export default function Chat({ userId, userName, messages, setInputText, handleS
                             Exit Room
                         </button>
                     </div>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex flex-col sm:flex-row justify-between text-sm">
                         <div>Joined as {userName}</div>
                         <div>Room Id: {roomId}</div>
                     </div>
                 </div>
-                <div className="flex-grow h-[500px] overflow-y-auto p-4 space-y-2">
+                <div className="flex-grow h-[300px] sm:h-[400px] lg:h-[500px] overflow-y-auto p-4 space-y-2">
                     {messages.map((message, index) => (
                         <div
                             key={index}
@@ -99,14 +99,13 @@ export default function Chat({ userId, userName, messages, setInputText, handleS
                 </div>
             </div>
 
-            <div className="flex flex-col p-20  overflow-hidden">
-                <div className="p-4  rounded-xl shadow-md bg-blue-500 text-white">
+            <div className="flex flex-col bg-white rounded-xl shadow-md overflow-hidden">
+                <div className="p-4 bg-blue-500 text-white">
                     <div className="flex justify-between items-center mb-2">
                         <h2 className="text-xl font-semibold">AI Chat Assistant</h2>
                     </div>
-
                 </div>
-                <div className="flex-grow  p-4">
+                <div className="flex-grow p-4 h-[200px] sm:h-[300px] lg:h-[400px] overflow-y-auto">
                     {aiResponse ? (
                         <div className="bg-blue-100 rounded-lg p-4 mb-4">
                             <pre className="whitespace-pre-wrap font-mono text-sm">{aiResponse}</pre>
