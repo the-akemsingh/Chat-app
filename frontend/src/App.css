@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'mirage-black';
+    src: url('/fonts/MADEMirageBlack.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}  
+@font-face {
+    font-family: 'mirage-Bold';
+    src: url('/fonts/MADEMirageBold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}  
+@font-face {
+    font-family: 'mirage-Medium';
+    src: url('/fonts/MADEMirageMedium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}  
+@font-face {
+    font-family: 'mirage-Regular';
+    src: url('/fonts/MADEMirageRegular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}  
+@font-face {
+    font-family: 'mirage-Thin';
+    src: url('/fonts/MADEMirageThin.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}  

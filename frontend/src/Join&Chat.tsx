@@ -3,10 +3,10 @@ import JoinRoom from "./components/JoinRoom";
 import Chat from "./components/Chat";
 
 
-export interface Message{
-    message:string,
-    name:string,
-    userId:number
+export interface Message {
+    message: string,
+    name: string,
+    userId: number
 }
 
 export default function JoinChat() {
@@ -16,25 +16,25 @@ export default function JoinChat() {
     const [connected, setConnected] = useState<boolean>(false);
     const [roomjoined, setRoomjoined] = useState<boolean>(false);
     const [roomId, setRoomId] = useState<string | null>(null)
-    const [userName,setUsername]=useState<string | null>(null);
-    const [userId,setUserId]=useState<number | null >(null);
-    const [wss,setWss]=useState<WebSocket | null>(null)
+    const [userName, setUsername] = useState<string | null>(null);
+    const [userId, setUserId] = useState<number | null>(null);
+    const [wss, setWss] = useState<WebSocket | null>(null)
     // const wss = useRef<WebSocket | null>(null)
 
-    const WS_URL=import.meta.env.VITE_WS_URL
+    const WS_URL = import.meta.env.VITE_WS_URL
 
     useEffect(() => {
-        const ws = new WebSocket( WS_URL )
+        const ws = new WebSocket(WS_URL)
         ws.onopen = () => {
             setConnected(true);
             ws.onmessage = (messages) => {
-                const data=JSON.parse(messages.data);
-                if(data.type==="join"){
-                    const userId=data.payload.userId;
+                const data = JSON.parse(messages.data);
+                if (data.type === "join") {
+                    const userId = data.payload.userId;
                     setUserId(userId);
                 }
-                else if(data.type==="chat"){
-                    setMessages(m=>[...m,data.payload])
+                else if (data.type === "chat") {
+                    setMessages(m => [...m, data.payload])
                 }
             }
             const roomId = localStorage.getItem("roomId")
@@ -44,7 +44,7 @@ export default function JoinChat() {
                     type: "join",
                     payload: {
                         roomId: roomId,
-                        name:userName
+                        name: userName
                     }
                 }))
                 setRoomjoined(true);
@@ -76,7 +76,7 @@ export default function JoinChat() {
                 type: "join",
                 payload: {
                     roomId,
-                    name:userName
+                    name: userName
                 }
             }))
             localStorage.setItem("roomId", roomId as string)
@@ -93,7 +93,7 @@ export default function JoinChat() {
                 payload: {
                     roomId,
                     message: inputText,
-                    name:userName
+                    name: userName
                 }
             }))
             setInputText('');
