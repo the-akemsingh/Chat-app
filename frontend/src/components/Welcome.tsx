@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { useTypingEffect } from "../hooks/typingEffects";
+// import { useTypingEffect } from "../hooks/typingEffects";
 import TextPopUp from "./textPopUp";
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
-  const typedText = useTypingEffect(['QUIET.', 'WARM.', 'ENCRYPTED.'], 100, 100, 1500);
+  // const typedText = useTypingEffect(['QUIET.', 'WARM.', 'ENCRYPTED.'], 100, 100, 1500);
   const router = useNavigate()
   // Animation variants
   const containerVariants = {
